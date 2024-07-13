@@ -25,13 +25,25 @@ const sidebarItems = [
   },
 ];
 
+export const slideWidth = 240;
+
 export default function Sidebar() {
   const pathname = usePathname();
   const isLinkSelected = (link: string) => {
     return pathname.includes(link.replace("/", ""));
   };
   return (
-    <Drawer variant="persistent" open>
+    <Drawer
+      variant="persistent"
+      open
+      sx={{
+        width: slideWidth,
+        "& .MuiDrawer-paper": {
+          width: slideWidth,
+          boxSizing: "border-box",
+        },
+      }}
+    >
       <div className="h-16 flex items-center justify-center">
         <Link href="/">
           <p className="text-2xl font-bold text-kw-studio-main">KW Studio</p>

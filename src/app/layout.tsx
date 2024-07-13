@@ -5,6 +5,7 @@ import Sidebar from "@/components/sidebar";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
+export const slideWidth = 250;
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,7 +17,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const slideWidth = 240;
   return (
     <html lang="en">
       <body className={inter.className}>
@@ -24,7 +24,7 @@ export default function RootLayout({
           <Sidebar />
           <div
             className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-gray-900 font-sans p-2"
-            style={{ paddingLeft: slideWidth }}
+            style={{ paddingLeft: `${slideWidth}px` }}
           >
             {children}
           </div>
