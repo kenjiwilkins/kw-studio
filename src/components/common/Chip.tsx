@@ -1,12 +1,12 @@
 import { Avatar, Chip as MuiChip } from "@mui/material";
 
-type Props = {
+export type ChipProps = {
   imageUrl?: string;
   title: string;
   emoji?: string;
 };
 
-export const Chip = (props: Props) => {
+export const Chip = (props: ChipProps) => {
   return (
     <MuiChip
       avatar={
