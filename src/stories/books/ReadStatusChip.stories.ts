@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { fn } from "@storybook/test";
-import ReadStatusChip from "@/components/books/readStatusChip";
+import ReadStatusChip from "@/components/books/ReadStatusChip";
 
 const meta = {
   title: "Book/ReadStatusChip",

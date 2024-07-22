@@ -8,7 +8,7 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import ReadStatusChip from "@/components/books/readStatusChip";
+import ReadStatusChip from "@/components/books/ReadStatusChip";
 
 function createBook(title: string, status: "read" | "unread" | "reading") {
   return { title, status };
