@@ -15,10 +15,10 @@ export const Chip = (props: ChipProps) => {
         ) : props.imageUrl ? (
           <Avatar src={props.imageUrl}></Avatar>
         ) : (
-          <Avatar>{props.title[0].toUpperCase()}</Avatar>
+          <Avatar>{props.title[0]?.toUpperCase() || ""}</Avatar>
         )
       }
-      label={props.title}
+      label={props.title || "unknown"}
     ></MuiChip>
   );
 };

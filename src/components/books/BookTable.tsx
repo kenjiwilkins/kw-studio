@@ -10,17 +10,15 @@ import {
 import { BookRate } from "./BookRate";
 import ReadStatusChip from "./ReadStatusChip";
 import { Chip } from "../common/Chip";
+import { Status } from "@/graphql/graphql";
 
 export interface BookTableProps {
   Books: {
     id: string;
     title: string;
-    author: {
-      name: string;
-      imageUrl?: string;
-    };
-    status: "read" | "unread" | "reading";
-    rating?: number;
+    authorName: string;
+    status: Status;
+    rate?: string;
   }[];
 }
 
@@ -43,16 +41,13 @@ export const BookTable = (props: BookTableProps) => {
                 {book.title}
               </TableCell>
               <TableCell>
-                <Chip
-                  imageUrl={book.author.imageUrl}
-                  title={book.author.name}
-                />
+                <Chip title={book.authorName} />
               </TableCell>
               <TableCell>
                 <ReadStatusChip status={book.status} />
               </TableCell>
               <TableCell>
-                <BookRate rating={book.rating || undefined}></BookRate>
+                <BookRate rate={book.rate || undefined}></BookRate>
               </TableCell>
             </TableRow>
           ))}

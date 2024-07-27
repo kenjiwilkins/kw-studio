@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { fn } from "@storybook/test";
 import { BookTable, BookTableProps } from "@/components/books/BookTable";
 import { faker } from "@faker-js/faker";
+import { BookReadStatus } from "@/graphql/graphql";
 
 function generateBooks(count: number) {
   const result: BookTableProps["Books"] = [];
@@ -13,7 +14,12 @@ function generateBooks(count: number) {
         name: faker.person.fullName(),
         imageUrl: i % 3 === 0 ? faker.image.avatar() : undefined,
       },
-      status: i % 3 === 0 ? "read" : i % 3 === 1 ? "unread" : "reading",
+      status:
+        i % 3 === 0
+          ? BookReadStatus.Read
+          : i % 3 === 1
+            ? BookReadStatus.Unread
+            : BookReadStatus.Reading,
       rating: i % 6,
     });
   }

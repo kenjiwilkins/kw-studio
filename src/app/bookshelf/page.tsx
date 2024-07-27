@@ -1,50 +1,66 @@
-import {
-  Container,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-} from "@mui/material";
-import ReadStatusChip from "@/components/books/ReadStatusChip";
+import { Box, Container } from "@mui/material";
+import { ReadBookCount } from "@/components/books/ReadBookCount";
+import { BookTable } from "@/components/books/BookTable";
+import { ApolloClient, createHttpLink } from "@apollo/client";
+import { InMemoryCache } from "@apollo/experimental-nextjs-app-support";
+import { gql } from "@apollo/client";
 
-function createBook(title: string, status: "read" | "unread" | "reading") {
-  return { title, status };
-}
+const getBooks = gql`
+  query Book($status: Status) {
+    book {
+      totalCount
+      books {
+        authorName
+        id
+        rate
+        status
+        title
+      }
+    }
+    bookByStatus(status: $status) {
+      totalCount
+    }
+  }
+`;
 
-const rows = [
-  createBook("The Great Gatsby", "read"),
-  createBook("The Catcher in the Rye", "unread"),
-  createBook("To Kill a Mockingbird", "reading"),
-];
-
-export default function Home() {
+export default async function Home() {
+  let t: any[] = [];
+  let totalBooks = 0;
+  let currentlyReading = 0;
+  const httpLink = createHttpLink({
+    uri: "http://localhost:4000/",
+    fetchOptions: { cache: "no-store" },
+  });
+  const client = new ApolloClient({
+    link: httpLink,
+    cache: new InMemoryCache(),
+  });
+  try {
+    const data = await client.query({
+      query: getBooks,
+      variables: { status: "reading" },
+    });
+    t = data.data.book.books;
+    totalBooks = data.data.book.totalCount || 0;
+    currentlyReading = data.data.bookByStatus.totalCount || 0;
+  } catch (error) {
+    console.error("error", error);
+  }
   return (
     <Container maxWidth={false} disableGutters>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="bookshelf table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Title</TableCell>
-              <TableCell>Status</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row, index) => (
-              <TableRow key={index}>
-                <TableCell component="th" scope="row">
-                  {row.title}
-                </TableCell>
-                <TableCell>
-                  <ReadStatusChip status={row.status} />
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+        <Box sx={{ display: "flex", justifyContent: "flex-start", gap: 2 }}>
+          <ReadBookCount
+            bookCount={totalBooks}
+            period="Total books in your library"
+          />
+          <ReadBookCount
+            bookCount={currentlyReading}
+            period="currently reading"
+          />
+        </Box>
+        <BookTable Books={t as any} />
+      </Box>
     </Container>
   );
 }

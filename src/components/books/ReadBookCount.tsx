@@ -19,7 +19,12 @@ export const ReadBookCount = (props: Props) => {
         }}
         className="flex flex-col items-center"
       >
-        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+        <Typography
+          sx={{ fontSize: 14 }}
+          color="text.secondary"
+          gutterBottom
+          className="w-full text-left"
+        >
           book count
         </Typography>
         <Typography variant="h3" color="text.primary">

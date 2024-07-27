@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { fn } from "@storybook/test";
 import ReadStatusChip from "@/components/books/ReadStatusChip";
+import { BookReadStatus } from "@/graphql/graphql";
 
 const meta = {
   title: "Book/ReadStatusChip",
@@ -10,7 +11,7 @@ const meta = {
       control: {
         type: "radio",
       },
-      options: ["read", "unread", "reading"],
+      options: ["Read", "Unread", "Reading"],
     },
   },
 } as Meta<typeof ReadStatusChip>;
@@ -20,18 +21,18 @@ type Story = StoryObj<typeof meta>;
 
 export const Read: Story = {
   args: {
-    status: "read",
+    status: BookReadStatus.Read,
   },
 };
 
 export const Unread: Story = {
   args: {
-    status: "unread",
+    status: BookReadStatus.Unread,
   },
 };
 
 export const Reading: Story = {
   args: {
-    status: "reading",
+    status: BookReadStatus.Reading,
   },
 };
